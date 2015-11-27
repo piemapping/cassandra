@@ -2,9 +2,7 @@
 set -e
 
 # first arg is `-f` or `--some-option`
-if [ "${1:0:1}" = '-' ]; then
 	set -- cassandra -f "$@"
-fi
 
 if [ "$1" = 'cassandra' ]; then
 	: ${CASSANDRA_RPC_ADDRESS='0.0.0.0'}
