@@ -1,10 +1,10 @@
-FROM debian:jessie-backports
+FROM debian:jessie
 
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57A16DD0047EC749D6EEC0353B12C
 
 RUN echo 'deb http://www.apache.org/dist/cassandra/debian 21x main' >> /etc/apt/sources.list.d/cassandra.list
 
-ENV CASSANDRA_VERSION 2.1.11
+ENV CASSANDRA_VERSION 2.1.12
 
 RUN apt-get update \
 	&& apt-get install -y cassandra="$CASSANDRA_VERSION" \
@@ -25,6 +25,7 @@ ENV CASSANDRA_CONFIG /etc/cassandra
 
 COPY /docker-entrypoint.sh /docker-entrypoint.sh
 COPY cassandra-env.sh /etc/cassandra/cassandra-env.sh
+COPY cassandra.yaml /etc/cassandra/cassandra.yaml
 
 VOLUME /var/lib/cassandra
 
