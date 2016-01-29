@@ -5,7 +5,6 @@ RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 514A2AD631A57
 RUN echo 'deb http://www.apache.org/dist/cassandra/debian 21x main' >> /etc/apt/sources.list.d/cassandra.list
 
 ENV CASSANDRA_VERSION 2.1.12
-
 RUN apt-get update \
 	&& apt-get install -y cassandra="$CASSANDRA_VERSION" \
 	&& rm -rf /var/lib/apt/lists/*
@@ -18,13 +17,12 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
 RUN apt-get install -y oracle-java8-installer
 RUN apt-get install -y curl
 
-
-
+RUN  wget http://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-jvm/1.3.2/jolokia-jvm-1.3.2-agent.jar -O /usr/share/java/jolokia-jvm-1.3.2-agent.jar
 
 ENV CASSANDRA_CONFIG /etc/cassandra
 
 COPY /docker-entrypoint.sh /docker-entrypoint.sh
-COPY cassandra-env.sh /etc/cassandra/cassandra-env.sh
+COPY cassandra-env.sh.tpl /etc/cassandra/cassandra-env.sh
 COPY cassandra.yaml /etc/cassandra/cassandra.yaml
 
 VOLUME /var/lib/cassandra

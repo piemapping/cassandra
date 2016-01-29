@@ -305,6 +305,7 @@ fi
 # to control its listen address and port.
 #MX4J_ADDRESS="-Dmx4jaddress=127.0.0.1"
 #MX4J_PORT="-Dmx4jport=8081"
+JVM_EXTRA_OPTS="-javaagent:/usr/share/java/jolokia-jvm-1.3.2-agent.jar=port=8778,host=0.0.0.0"
 
 JVM_OPTS="$JVM_OPTS $MX4J_ADDRESS"
 JVM_OPTS="$JVM_OPTS $MX4J_PORT"
