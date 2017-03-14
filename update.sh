@@ -9,12 +9,11 @@ if [ ${#versions[@]} -eq 0 ]; then
 fi
 versions=( "${versions[@]%/}" )
 
-
 travisEnv=
 for version in "${versions[@]}"; do
 	dist="${version//./}"
 	packagesUrl="http://www.apache.org/dist/cassandra/debian/dists/${dist}x/main/binary-amd64/Packages.gz"
-	fullVersion="$(curl -fsSL "$packagesUrl" | gunzip | grep -m1 -A10 "^Package: cassandra\$" | grep -m1 '^Version: ' | cut -d' ' -f2)"
+	fullVersion="$(curl -fsSL "$packagesUrl" | gunzip | awk -F ': ' '$1 == "Package" { pkg = $2 } pkg == "cassandra" && $1 == "Version" { print $2 }')"
 	
 	(
 		set -x
